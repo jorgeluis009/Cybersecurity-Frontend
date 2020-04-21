@@ -1,6 +1,5 @@
 <?php
 
-
 session_start();
 $varsession = $_SESSION['username'];
 if (empty($varsession)) {

@@ -1,16 +1,20 @@
 <?php
 
-include("func_properties.php");
-include("db_connection.php");
+//include database properties
+include("db_manager.php");
+//exclude warnings messages
+error_reporting(E_ERROR | E_PARSE);
 
-$ini_date = $_POST['ini-date'];
-$fini_date = $_POST['fini-date'];
+//if vars are undefined, set them
+if (!isset($ini_date))    $ini_date = $_POST['ini-date'];
+if (!isset($fini_date))   $ini_date = $_POST['fini-date'];
 
-$sales = getAllVentas($ini_date, $fini_date);
+//get all sales from db
+$sales = getAllSales($ini_date, $fini_date);
 ?>
 
 <head>
-  <title>Panel: Vendedor</title>
+  <title>Vendedor</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
@@ -62,8 +66,6 @@ $sales = getAllVentas($ini_date, $fini_date);
               <th>Concepto</th>
               <th>Monto</th>
               <th>Fecha</th>
-              <th>Estado</th>
-              <th>Comisión</th>
             </tr>
           </thead>
           <tbody>
@@ -75,8 +77,6 @@ $sales = getAllVentas($ini_date, $fini_date);
               echo '<td>' . $row['sale_concept'] . '</td>';
               echo '<td>$' . $row['sale_amount'] . '</td>';
               echo '<td>' . date("Y-m-d", strtotime($row['sale_date'])) . '</td>';
-              echo '<td>' . $row['validate'] . '</td>';
-              echo '<td>' . $row['comission'] . '%</td>';
               echo '</tr>';
             }
             ?>
@@ -86,7 +86,6 @@ $sales = getAllVentas($ini_date, $fini_date);
   </div>
   </center>
   </div>
-  <script src="js/jquery-3.3.1.min.js"></script>
 </body>
 
 </html>

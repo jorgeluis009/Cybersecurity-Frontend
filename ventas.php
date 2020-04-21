@@ -1,25 +1,26 @@
 <?php
 
-include("func_properties.php");
-include("db_connection.php");
+include("db_manager.php");
 
 session_start();
-$username = $_SESSION['username'];
-$post_client = $_POST['client'];
-$post_company = $_POST['company'];
-$post_concept = $_POST['concept'];
-$post_amount = $_POST['amount'];
-$post_date = $_POST['date'];
-$post_validate = $_POST['sel1'];
-$post_comission = $_POST['comission'];
+error_reporting(E_ERROR | E_PARSE);
 
-sqlInsert($username, $post_client, $post_company, $post_concept, $post_amount, $post_date, $post_validate, $post_comission);
+$username = $_SESSION['username'];
+
+if ($_POST) {
+  $post_client = $_POST['client'];
+  $post_company = $_POST['company'];
+  $post_concept = $_POST['concept'];
+  $post_amount = $_POST['amount'];
+  $post_date = $_POST['date'];
+  sqlInsert($username, $post_client, $post_company, $post_concept, $post_amount, $post_date);
+}
 
 ?>
 <html>
 
 <head>
-  <title>Panel: Vendedor</title>
+  <title>Vendedor</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
@@ -44,28 +45,19 @@ sqlInsert($username, $post_client, $post_company, $post_concept, $post_amount, $
         <div class="col-6 shadow rounded p-3 mx-auto" style=" background-color: lightgray; margin-bottom:9rem;">
           <form action="ventas.php" method="POST">
             <div class="form-group">
-              <input type="text" class="form-control" name="client" id="client" placeholder="Ingrese nombre del cliente">
+              <input type="text" class="form-control" name="client" id="client" placeholder="Ingrese nombre del cliente" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="company" id="company" placeholder="Ingrese nombre de empresa">
+              <input type="text" class="form-control" name="company" id="company" placeholder="Ingrese nombre de empresa" required>
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" name="concept" id="concept" placeholder="Ingrese concepto de venta">
+              <input type="text" class="form-control" name="concept" id="concept" placeholder="Ingrese concepto de venta" required>
             </div>
             <div class="form-group">
-              <input type="number" class="form-control" name="amount" id="amount" placeholder="Ingrese monto de venta">
+              <input type="number" class="form-control" name="amount" id="amount" placeholder="Ingrese monto de venta" required>
             </div>
             <div class="form-group">
-              <input placeholder="Ingrese fecha de venta" class="form-control" name="date" id="date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
-            </div>
-            <div class="form-group">
-              <select class="form-control" name="sel1" id="sel1">
-                <option>Venta validada</option>
-                <option>Venta sin validar</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <input type="number" class="form-control" name="comission" id="comission" placeholder="Ingrese comisión">
+              <input placeholder="Ingrese fecha de venta" class="form-control" name="date" id="date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" required>
             </div>
             <button type="submit" class="btn btn-lg btn-primary">Crear</button>
         </div>

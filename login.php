@@ -1,20 +1,14 @@
 <?php
 session_start();
-include("func_properties.php");
-include("db_connection.php");
+include("db_manager.php");
 if ($_POST) {
     $post_usuario = $_POST['usuario'];
     $post_pass = $_POST['password'];
 
-    $id_usuario = validarUsuario($post_usuario, $post_pass);
+    $id_usuario = validateUser($post_usuario, $post_pass);
     if ($id_usuario <> 0) {
-        $tipo_usuario = getTipoUsuario($id_usuario);
         $_SESSION['username'] = $post_usuario;
-        if ($tipo_usuario == "manager") {
-            header("Location:ini-ger.php");
-        } else {
-            header("Location:ini-vend.php");
-        }
+        header("Location:ini-vend.php");
     } else {
         $label = "Usuario o contraseñas incorrectos";
     }
