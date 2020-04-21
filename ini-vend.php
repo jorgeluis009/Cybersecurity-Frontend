@@ -9,8 +9,19 @@ error_reporting(E_ERROR | E_PARSE);
 if (!isset($ini_date))    $ini_date = $_POST['ini-date'];
 if (!isset($fini_date))   $ini_date = $_POST['fini-date'];
 
+
+//delete clicked table item
+if (isset($_POST['btnAction'])) {
+  if (deleteUser($_POST['client_name']) > 1) {
+    echo "<script> alert('Usuario " . $_POST['client_name'] . " eliminado...'); </script>";
+  } else {
+    echo "<script> alert('Usuario " . $_POST['client_name'] . " no eliminado, error 404.'); </script>";
+  }
+}
+
 //get all sales from db
 $sales = getAllSales($ini_date, $fini_date);
+
 ?>
 
 <head>
@@ -58,14 +69,15 @@ $sales = getAllSales($ini_date, $fini_date);
         </div>
       </form>
       <div class="row my-4 pb-4">
-        <table class="table" id="tabla">
+        <table class="table table-light" id="tabla">
           <thead>
             <tr>
-              <th>Cliente</th>
-              <th>Empresa</th>
-              <th>Concepto</th>
-              <th>Monto</th>
-              <th>Fecha</th>
+              <td>Cliente</td>
+              <td>Empresa</td>
+              <td>Concepto</td>
+              <td>Monto</td>
+              <td>Fecha</td>
+              <td></td>
             </tr>
           </thead>
           <tbody>
@@ -77,6 +89,12 @@ $sales = getAllSales($ini_date, $fini_date);
               echo '<td>' . $row['sale_concept'] . '</td>';
               echo '<td>$' . $row['sale_amount'] . '</td>';
               echo '<td>' . date("Y-m-d", strtotime($row['sale_date'])) . '</td>';
+              echo '<td><form action="" method="post">
+              <input type="hidden" id="client_name"  name="client_name" value="' . $row['client_name'] . '">
+              <button class="btn btn-danger" type="submit" name="btnAction" value="delete">
+                Eliminar
+              </button>
+            </form> </td>';
               echo '</tr>';
             }
             ?>

@@ -14,6 +14,7 @@ if ($_POST) {
   $post_amount = $_POST['amount'];
   $post_date = $_POST['date'];
   sqlInsert($username, $post_client, $post_company, $post_concept, $post_amount, $post_date);
+  echo "<script> alert('Se ha agregado una nueva del cliente: " . $_POST['client'] . " exitosamente'); </script>";
 }
 
 ?>

@@ -44,6 +44,26 @@ function getAllSales($ini_date, $fini_date)
 	return $rows;
 }
 
+function deleteUser($usuario)
+{
+	$conn = dbConnect();
+	$sql = 'SELECT id_user FROM sale where client_name=' . "'$usuario'" . ' limit 1';
+	$result = (sqlSelect($sql));
+	while ($row = mysqli_fetch_array($result, MYSQLI_BOTH)) {
+		$rows[] = $row;
+	}
+	if (count($rows) > 0) {
+		$res = $rows;
+	} else {
+		$res = 0;
+	}
+	$id_user =  $res[0]['id_user'];
+	$sql = 'DELETE FROM sale WHERE id_user=' . $id_user;
+	$result = (sqlSelect($sql));
+	return $res;
+	mysqli_close($conn);
+}
+
 function validateUser($usuario, $pass)
 {
 	$conn = dbConnect();
